@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -77,6 +78,44 @@ namespace BigSchool2.Controllers
                 item.LectureName = currentUser.Name;
             }
             return View(courses);
+        }
+        public ActionResult Edit(int id)
+        {
+            Course course = context.Courses.FirstOrDefault(x => x.Id == id);
+            course.ListCategory = context.Categories.ToList();
+            return View(course);
+        }
+
+        [Authorize]
+        [HttpPost, ActionName("Edit")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Course objCourse)
+        {
+            context.Courses.AddOrUpdate(objCourse);
+            context.SaveChanges();
+            objCourse.ListCategory = context.Categories.ToList();
+            return View(objCourse);
+        }
+        public ActionResult Delete(int id)
+        {
+            var b = context.Courses.First(m => m.Id == id);
+            return View(b);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public ActionResult DeleteItem(int id)
+        {
+            var a = context.Attendances.Where(m => m.CourseId == id).First();
+            context.Attendances.Remove(a);
+            context.SaveChanges();
+            //Course course = context.Courses.FirstOrDefault(x => x.Id == id);
+            var b = context.Courses.Where(x => x.Id == id).First();
+                context.Courses.Remove(b);
+                context.SaveChanges();
+                return RedirectToAction("Mine");
+
         }
     }
 }

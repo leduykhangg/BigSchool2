@@ -20,16 +20,14 @@
                 <div>
                     <div class="details">
                         <span class="lecture"><b>@course.LectureName</b></span><br>
-                        <span class="catagory">
-                            @course.Category.Name
-                    </span>
+                        <span class="category">@course.Category.Name</span>
+                    </div>
+                    <div class="action">
+                        @Html.ActionLink("Edit", "Edit", new { id = course.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = course.Id })
+                    </div>
                 </div>
-                <div class="action">
-                    <a href="">Edit</a>
-                    <a href="">Delete</a>
-                </div>
-            </div>
-        </li>
-}
+            </li>
+        }
     </ul>
 </div>
