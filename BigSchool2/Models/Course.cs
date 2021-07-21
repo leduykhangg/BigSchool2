@@ -28,7 +28,7 @@ namespace BigSchool2.Models
         public DateTime DataTime { get; set; }
 
         public int CategoryId { get; set; }
-        
+
         public string Name;
         public string LectureName;
 
@@ -37,5 +37,9 @@ namespace BigSchool2.Models
 
         public virtual Category Category { get; set; }
         public List<Category> ListCategory = new List<Category>();
+
+        public bool isLogin = false;
+        public bool isShowGoing = false;
+        public bool isShowFollow = false;
     }
 }
